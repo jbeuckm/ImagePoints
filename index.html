@@ -1,0 +1,45 @@
+<html>
+
+<head>
+
+  <title>Image Points Renderer</title>
+
+  <link type="text/css" href="bower_components/jquery-ui/themes/base/jquery-ui.css" rel="stylesheet" />
+
+  <script src="bower_components/easeljs/lib/easeljs-0.7.1.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+
+  <script src="js/imagepoints.js"></script>
+
+</head>
+
+<body>
+
+  <div>
+  use proxy: <input id="use-proxy" type="checkbox" checked/>
+  </div>
+
+  <label for="image-url">URL:</label> <input type="text" id="image-url" size="200" value="http://louisamarionphotography.com/babies/babies18.jpg"/>
+  <input type="button" id="go-button" value="go"/>
+  <br>
+
+  blocksize: <div id="blocksize-slider"></div>
+  holesize: <div id="holesize-slider"></div>
+
+  show image: <input id="show-image" type="checkbox" checked/>
+
+  <div id="holder">
+    <img id="main-image" style="display:none"/>
+    <canvas id="main-canvas" width="1000" height="1000">You need canvas support for this.</canvas>
+  </div>
+
+  final width: <div id="final-width-slider"></div>
+  <input type="text" id="final-width-value"/>
+  <input type="text" id="final-height-value"/>
+  <input type="button" value="produce g-code" id="g-code-button"/><br>
+  <textarea id="g-code" cols="20" rows="100"></textarea>
+
+</body>
+
+</html>

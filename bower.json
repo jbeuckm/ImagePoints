@@ -1,0 +1,25 @@
+{
+  "name": "ImagePoints",
+  "version": "0.0.5",
+  "authors": [
+    "joe beuckman <joebeuckman@gmail.com>"
+  ],
+  "description": "Generate G-Code to drill hole grid with depth based on brightness of a given image",
+  "main": "index.html",
+  "keywords": [
+    "cnc"
+  ],
+  "license": "Don't read software licenses. Don't write software licenses.",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "easeljs": "*",
+    "jquery": "~2.1.0",
+    "jquery-ui": "~1.10.4"
+  }
+}
