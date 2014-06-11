@@ -21,11 +21,14 @@
   </div>
 
   <label for="image-url">URL:</label> <input type="text" id="image-url" size="200" value="img/baboon.jpg"/>
-  <input type="button" id="go-button" value="go"/>
+  <input type="button" id="load-image-button" value="load image"/>
   <br>
 
-  blocksize: <div id="blocksize-slider"></div>
-  holesize: <div id="holesize-slider"></div>
+  <div id="grid-controls">
+    blocksize: <div id="blocksize-slider"></div>
+    holesize: <div id="holesize-slider"></div>
+    <input type="button" id="grid-button" value="generate grid points"/>
+  </div>
 
   show image: <input id="show-image" type="checkbox" checked/>
 

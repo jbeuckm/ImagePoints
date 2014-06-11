@@ -36,9 +36,10 @@ $(document).ready(function(){
   imagepoints_worker.addEventListener('message', handleWorkerMessage, false);
 
   $('#g-code-button').click(generateGcode);
+  $('#grid-button').click(gridButton);
 
 
-  $('#go-button').click(function(){
+  $('#load-image-button').click(function(){
     var url;
 
     if ($('#use-proxy').is(':checked')) {
@@ -53,32 +54,38 @@ $(document).ready(function(){
 
     // update stage when image data is available to display
     var img = $('#main-image').get(0);
-    img.onload = function(){
-
-      console.log('loaded image '+img.width+', '+img.height);
-
-      var g = new createjs.Graphics();
-      g.beginFill('#000');
-      g.rect(0, 0, img.width, img.height);
-      main_stage.addChild(new createjs.Shape(g));
-      main_stage.addChild(image_bitmap);
-      main_stage.addChild(points_shape);
-
-      image_canvas = $('<canvas width="'+img.width+'" height="'+img.height+'"></canvas>');
-      image_canvas_ctx = $(image_canvas).get(0).getContext("2d");
-      image_canvas_ctx.drawImage(img, 0, 0);
-
-      main_stage.update();
-
-      reset_points();
-      updateNextRowPoints();
-    };
+    img.onload = handleImageLoaded;
     img.src = url;
 
   });
 
 });
 
+function handleImageLoaded() {
+
+    var img = this;
+
+    console.log('loaded image '+img.width+', '+img.height);
+
+    var g = new createjs.Graphics();
+    g.beginFill('#000');
+    g.rect(0, 0, img.width, img.height);
+    main_stage.addChild(new createjs.Shape(g));
+    main_stage.addChild(image_bitmap);
+    main_stage.addChild(points_shape);
+
+    image_canvas = $('<canvas width="'+img.width+'" height="'+img.height+'"></canvas>');
+    image_canvas_ctx = $(image_canvas).get(0).getContext("2d");
+    image_canvas_ctx.drawImage(img, 0, 0);
+
+    main_stage.update();
+
+}
+
+function gridButton() {
+    reset_points();
+    updateNextRowPoints();
+}
 
 function handleWorkerMessage(e) {
 
