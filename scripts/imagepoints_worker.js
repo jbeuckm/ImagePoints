@@ -1,7 +1,5 @@
-/*
-
-Worker thread does the work of analyzing the image to keep the UI thread nice.
-
+/**
+ * Worker thread anayzes the image to keep the UI thread nice.
  */
 self.addEventListener('message', function(e) {
 

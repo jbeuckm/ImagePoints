@@ -32,19 +32,8 @@ $(document).ready(function(){
     main_stage.update();
   });
 
-  imagepoints_worker = new Worker('js/imagepoints_worker.js?v='+Math.random());
-  imagepoints_worker.addEventListener('message', function(e) {
-
-    var data = e.data;
-    if (data.jobno != currentJobNo) return;
-
-    switch (data.cmd) {
-
-      case 'row_processed':
-        drawRowPoints(data.rowPoints);
-        break;
-    }
-  }, false);
+  imagepoints_worker = new Worker('scripts/imagepoints_worker.js?v='+Math.random());
+  imagepoints_worker.addEventListener('message', handleWorkerMessage, false);
 
   $('#g-code-button').click(generateGcode);
 
@@ -61,7 +50,6 @@ $(document).ready(function(){
 
 
     image_bitmap = new createjs.Bitmap(url);
-//    image_bitmap.alpha = .2;
 
     // update stage when image data is available to display
     var img = $('#main-image').get(0);
@@ -91,6 +79,19 @@ $(document).ready(function(){
 
 });
 
+
+function handleWorkerMessage(e) {
+
+    var data = e.data;
+    if (data.jobno != currentJobNo) return;
+
+    switch (data.cmd) {
+
+        case 'row_processed':
+            drawRowPoints(data.rowPoints);
+            break;
+    }
+}
 
 
 function updateNextRowPoints() {
