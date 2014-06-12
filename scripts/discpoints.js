@@ -1,5 +1,5 @@
 
-var MAX_CANDIDATES = 10;
+var MAX_CANDIDATES = 10, INTERVAL = 5;
 var activeDiscPoints, inactiveDiscPoints;
 var searchRadiusInner, searchRadiusOuter;
 
@@ -54,16 +54,15 @@ function processNextActivePoint() {
     var testIndex = ~~(Math.random() * activeDiscPoints.length);
     var testPoint = activeDiscPoints[testIndex];
 
-    console.log(testPoint);
     drawRange(testPoint);
 
     var setPointInactive = true;
     for (var i=0; i<MAX_CANDIDATES; i++) {
         var candidate = generateCandidate(testPoint);
-        drawPoint(candidate);
+        recordPointDetails(candidate);
 
         if (testCandidate(candidate)) {
-            recordPointDetails(candidate);
+            drawPoint(candidate);
             activeDiscPoints.push(candidate);
             setPointInactive = false;
             break;
@@ -73,20 +72,30 @@ function processNextActivePoint() {
         activeDiscPoints.splice(testIndex, 1);
         inactiveDiscPoints.push(testPoint);
     }
-    setTimeout(processNextActivePoint, 500);
+    setTimeout(processNextActivePoint, INTERVAL);
 }
 
 function recordPointDetails(p) {
-    console.log(p);
     var pixel = getPixel(image_data, p.x, p.y);
-    console.log(pixel);
 }
 
 
 function testCandidate(candidate) {
+
+    var testPool = activeDiscPoints.concat(inactiveDiscPoints);
+
+    for (var i= 0, l=testPool.length; i<l; i++) {
+        var testPoint = testPool[i];
+        var dist = pointDistance(candidate, testPoint);
+        console.log(dist);
+        if (dist < searchRadiusInner) return false;
+    }
     return true;
 }
 
+function pointDistance(p1, p2) {
+    return Math.sqrt( (p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y) );
+}
 
 var PI_2 = 2 * Math.PI;
 function generateCandidate(p) {
@@ -130,7 +139,7 @@ function drawRange(p) {
 function drawPoint(p) {
 
     points_graphics.beginFill('#fdc');
-    points_graphics.drawCircle(p.x, p.y, 3);
+    points_graphics.drawCircle(p.x, p.y, 1);
     points_graphics.endStroke();
 
     main_stage.update();
