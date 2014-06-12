@@ -1,5 +1,5 @@
 
-var MAX_CANDIDATES = 10, INTERVAL = 5;
+var MAX_CANDIDATES = 10, INTERVAL = 1, MAX_BRIGHTNESS = 255*3;
 var activeDiscPoints, inactiveDiscPoints;
 var searchRadiusInner, searchRadiusOuter;
 
@@ -21,6 +21,8 @@ function resetDiscPoints() {
 }
 
 function startFindingDiscPoints() {
+
+    points_graphics.clear();
 
     if (!range_graphics) {
         range_graphics = new createjs.Graphics();
@@ -77,8 +79,12 @@ function processNextActivePoint() {
 
 function recordPointDetails(p) {
     var pixel = getPixel(image_data, p.x, p.y);
+    var buffer = MAX_BRIGHTNESS - brightness(pixel);
 }
 
+function brightness(pixel) {
+    return pixel.r + pixel.g + pixel.b;
+}
 
 function testCandidate(candidate) {
 
