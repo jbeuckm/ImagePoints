@@ -1,5 +1,5 @@
 
-var MAX_CANDIDATES = 10, INTERVAL = 1, MAX_BRIGHTNESS = 255*3;
+var MAX_CANDIDATES = 20, INTERVAL = 1, MAX_BRIGHTNESS = 255*3;
 var activeDiscPoints, inactiveDiscPoints;
 var searchRadiusInner, searchRadiusOuter;
 
@@ -79,7 +79,7 @@ function processNextActivePoint() {
 
 function recordPointDetails(p) {
     var pixel = getPixel(image_data, p.x, p.y);
-    var buffer = MAX_BRIGHTNESS - brightness(pixel);
+    p.buffer = searchRadiusInner + brightness(pixel)/MAX_BRIGHTNESS * (searchRadiusOuter-searchRadiusInner);
 }
 
 function brightness(pixel) {
@@ -94,7 +94,7 @@ function testCandidate(candidate) {
         var testPoint = testPool[i];
         var dist = pointDistance(candidate, testPoint);
         console.log(dist);
-        if (dist < searchRadiusInner) return false;
+        if (dist < (candidate.buffer + testPoint.buffer)/2) return false;
     }
     return true;
 }
