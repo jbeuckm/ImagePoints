@@ -42,17 +42,18 @@ function processNextActivePoint() {
     }
 
     var testIndex = ~~(Math.random() * activeDiscPoints.length);
-    var chosenActivePoint = activeDiscPoints[testIndex];
+    var testPoint = activeDiscPoints[testIndex];
 
-    console.log(chosenActivePoint);
-    drawRange(chosenActivePoint);
+    console.log(testPoint);
+    drawRange(testPoint);
 
     var setPointInactive = true;
     for (var i=0; i<MAX_CANDIDATES; i++) {
-        var candidate = generateCandidate(chosenActivePoint);
+        var candidate = generateCandidate(testPoint);
         drawPoint(candidate);
 
         if (testCandidate(candidate)) {
+            recordPointDetails(candidate);
             activeDiscPoints.push(candidate);
             setPointInactive = false;
             break;
@@ -60,13 +61,19 @@ function processNextActivePoint() {
     }
     if (setPointInactive) {
         activeDiscPoints.splice(testIndex, 1);
-        inactiveDiscPoints.push(chosenActivePoint);
+        inactiveDiscPoints.push(testPoint);
     }
-    processNextActivePoint();
+    setTimeout(processNextActivePoint, 500);
 }
 
+function recordPointDetails(p) {
+    var pixel = getPixel(image_data, p.x, p.y);
+    console.log(pixel);
+}
+
+
 function testCandidate(candidate) {
-    
+    return true;
 }
 
 

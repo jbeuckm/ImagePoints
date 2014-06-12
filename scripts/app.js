@@ -76,7 +76,7 @@ function handleImageLoaded() {
     image_canvas_ctx = $(image_canvas).get(0).getContext("2d");
     image_canvas_ctx.drawImage(img, 0, 0);
 
-    image_data = image_canvas_ctx.getImageData(0, 0, img.width, img.height).data;
+    image_data = image_canvas_ctx.getImageData(0, 0, img.width, img.height);
 
     main_stage.update();
 }
