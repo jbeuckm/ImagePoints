@@ -45,6 +45,23 @@ function processNextActivePoint() {
     var chosenActivePoint = activeDiscPoints[index];
 
     console.log(chosenActivePoint);
+    drawRange(chosenActivePoint);
+}
+
+
+function drawRange(p) {
+
+    points_graphics.beginStroke('#f00');
+    points_graphics.beginFill(null);
+    points_graphics.drawCircle(p.x, p.y, searchRadiusInner);
+    points_graphics.endStroke();
+
+    points_graphics.beginStroke('#f00');
+    points_graphics.beginFill(null);
+    points_graphics.drawCircle(p.x, p.y, searchRadiusOuter);
+    points_graphics.endStroke();
+
+    main_stage.update();
 }
 
 
