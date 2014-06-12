@@ -41,16 +41,32 @@ function processNextActivePoint() {
         return;
     }
 
-    var index = ~~(Math.random() * activeDiscPoints.length);
-    var chosenActivePoint = activeDiscPoints[index];
+    var testIndex = ~~(Math.random() * activeDiscPoints.length);
+    var chosenActivePoint = activeDiscPoints[testIndex];
 
     console.log(chosenActivePoint);
     drawRange(chosenActivePoint);
 
+    var setPointInactive = true;
     for (var i=0; i<MAX_CANDIDATES; i++) {
         var candidate = generateCandidate(chosenActivePoint);
         drawPoint(candidate);
+
+        if (testCandidate(candidate)) {
+            activeDiscPoints.push(candidate);
+            setPointInactive = false;
+            break;
+        }
     }
+    if (setPointInactive) {
+        activeDiscPoints.splice(testIndex, 1);
+        inactiveDiscPoints.push(chosenActivePoint);
+    }
+    processNextActivePoint();
+}
+
+function testCandidate(candidate) {
+    
 }
 
 
@@ -61,7 +77,7 @@ function generateCandidate(p) {
     var range = searchRadiusOuter - searchRadiusInner;
     console.log(range);
     var radius = searchRadiusInner + Math.random() * range;
-console.log("radius = "+radius);
+
     var x = p.x + radius * Math.cos(theta);
     var y = p.y + radius * Math.sin(theta);
 
