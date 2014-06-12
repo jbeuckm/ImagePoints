@@ -4,20 +4,25 @@
 
   <title>Image Points Renderer</title>
 
+  <link rel="stylesheet" href="css/styles.css"/>
+
   <link type="text/css" href="bower_components/jquery-ui/themes/base/jquery-ui.css" rel="stylesheet" />
 
   <script src="bower_components/easeljs/lib/easeljs-0.7.1.min.js"></script>
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
 
-  <script src="scripts/imagepoints.js"></script>
+  <script src="scripts/app.js"></script>
+  <script src="scripts/gridpoints.js"></script>
+  <script src="scripts/discpoints.js"></script>
 
 </head>
 
 <body>
 
   <div>
-  use proxy: <input id="use-proxy" type="checkbox"/>
+    <label for="use-proxy">use proxy</label>
+    <input id="use-proxy" type="checkbox"/>
   </div>
 
   <label for="image-url">URL:</label> <input type="text" id="image-url" size="200" value="img/baboon.jpg"/>
@@ -30,7 +35,26 @@
     <input type="button" id="grid-button" value="generate grid points"/>
   </div>
 
-  show image: <input id="show-image" type="checkbox" checked/>
+  <div id="disc-controls">
+
+    <div>
+      <label for="min-disc-spacing">Min Spacing</label>
+      <input id="min-disc-spacing" type ="range" min ="0" max="1000.0" step ="0.1"/>
+    </div>
+
+    <div>
+      <label for="max-disc-spacing">Max Spacing</label>
+      <input id="max-disc-spacing" type ="range" min ="0" max="1000.0" step ="0.1"/>
+    </div>
+
+    <input type="button" id="disc-button" value="generate disc points"/>
+
+  </div>
+
+  <div>
+    <label for="show-image">show image</label>
+    <input id="show-image" type="checkbox" checked/>
+  </div>
 
   <div id="holder">
     <img id="main-image" style="display:none"/>
