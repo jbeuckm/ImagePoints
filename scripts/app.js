@@ -1,6 +1,7 @@
 var main_canvas, main_stage, image_bitmap, image_canvas, image_canvas_ctx;
 var image_data;
 
+var IMAGE_WIDTH, IMAGE_HEIGHT;
 
 $(document).ready(function () {
 
@@ -60,6 +61,9 @@ function handleImageLoaded() {
     var img = this;
 
     console.log('loaded image ' + img.width + ', ' + img.height);
+
+    IMAGE_WIDTH = img.width;
+    IMAGE_HEIGHT = img.height;
 
     var g = new createjs.Graphics();
     g.beginFill('#000');

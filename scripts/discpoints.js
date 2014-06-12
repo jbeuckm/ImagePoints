@@ -1,5 +1,5 @@
 
-var maxCandidates = 10;
+var MAX_CANDIDATES = 10;
 var activeDiscPoints, inactiveDiscPoints;
 var searchRadiusInner, searchRadiusOuter;
 
@@ -8,8 +8,8 @@ $('#min-disc-spacing').change(function(e){
 });
 
 function updateSearchRadii() {
-    searchRadiusInner = $('#min-disc-spacing').val();
-    searchRadiusOuter = $('#max-disc-spacing').val();
+    searchRadiusInner = parseFloat($('#min-disc-spacing').val());
+    searchRadiusOuter = parseFloat($('#max-disc-spacing').val());
 }
 
 
@@ -23,8 +23,8 @@ function startFindingDiscPoints() {
     resetDiscPoints();
 
     var startPoint = {
-        x: ~~(Math.random() * image_canvas_ctx.canvas.width),
-        y: ~~(Math.random() * image_canvas_ctx.canvas.height)
+        x: ~~(Math.random() * IMAGE_WIDTH),
+        y: ~~(Math.random() * IMAGE_HEIGHT)
     };
     drawPoint(startPoint);
     activeDiscPoints.push(startPoint);
@@ -46,6 +46,31 @@ function processNextActivePoint() {
 
     console.log(chosenActivePoint);
     drawRange(chosenActivePoint);
+
+    for (var i=0; i<MAX_CANDIDATES; i++) {
+        var candidate = generateCandidate(chosenActivePoint);
+        drawPoint(candidate);
+    }
+}
+
+
+var PI_2 = 2 * Math.PI;
+function generateCandidate(p) {
+    var theta = Math.random() * PI_2;
+
+    var range = searchRadiusOuter - searchRadiusInner;
+    console.log(range);
+    var radius = searchRadiusInner + Math.random() * range;
+console.log("radius = "+radius);
+    var x = p.x + radius * Math.cos(theta);
+    var y = p.y + radius * Math.sin(theta);
+
+    if (x < 0) return generateCandidate(p);
+    if (x > IMAGE_WIDTH) return generateCandidate(p);
+    if (y < 0) return generateCandidate(p);
+    if (y > IMAGE_HEIGHT) return generateCandidate(p);
+
+    return { x:x, y:y };
 }
 
 
