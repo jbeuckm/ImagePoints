@@ -3,6 +3,8 @@ var MAX_CANDIDATES = 10;
 var activeDiscPoints, inactiveDiscPoints;
 var searchRadiusInner, searchRadiusOuter;
 
+var range_graphics;
+
 $('#min-disc-spacing').change(function(e){
     console.log(e);
 });
@@ -19,7 +21,13 @@ function resetDiscPoints() {
 }
 
 function startFindingDiscPoints() {
-    points_graphics.clear();
+
+    if (!range_graphics) {
+        range_graphics = new createjs.Graphics();
+        var range_shape = new createjs.Shape(range_graphics);
+        main_stage.addChild(range_shape);
+    }
+
     resetDiscPoints();
 
     var startPoint = {
@@ -35,6 +43,8 @@ function startFindingDiscPoints() {
 }
 
 function processNextActivePoint() {
+
+    range_graphics.clear();
 
     if (activeDiscPoints.length == 0) {
         console.log('finished disc points');
@@ -67,6 +77,7 @@ function processNextActivePoint() {
 }
 
 function recordPointDetails(p) {
+    console.log(p);
     var pixel = getPixel(image_data, p.x, p.y);
     console.log(pixel);
 }
@@ -93,21 +104,24 @@ function generateCandidate(p) {
     if (y < 0) return generateCandidate(p);
     if (y > IMAGE_HEIGHT) return generateCandidate(p);
 
-    return { x:x, y:y };
+    return {
+        x:parseInt(x),
+        y:parseInt(y)
+    };
 }
 
 
 function drawRange(p) {
 
-    points_graphics.beginStroke('#f00');
-    points_graphics.beginFill(null);
-    points_graphics.drawCircle(p.x, p.y, searchRadiusInner);
-    points_graphics.endStroke();
+    range_graphics.beginStroke('#f00');
+    range_graphics.beginFill(null);
+    range_graphics.drawCircle(p.x, p.y, searchRadiusInner);
+    range_graphics.endStroke();
 
-    points_graphics.beginStroke('#f00');
-    points_graphics.beginFill(null);
-    points_graphics.drawCircle(p.x, p.y, searchRadiusOuter);
-    points_graphics.endStroke();
+    range_graphics.beginStroke('#f00');
+    range_graphics.beginFill(null);
+    range_graphics.drawCircle(p.x, p.y, searchRadiusOuter);
+    range_graphics.endStroke();
 
     main_stage.update();
 }
