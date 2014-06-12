@@ -26,6 +26,7 @@ function startFindingDiscPoints() {
         x: ~~(Math.random() * image_canvas_ctx.canvas.width),
         y: ~~(Math.random() * image_canvas_ctx.canvas.height)
     };
+    drawPoint(startPoint);
     activeDiscPoints.push(startPoint);
 
     updateSearchRadii();
@@ -44,4 +45,14 @@ function processNextActivePoint() {
     var chosenActivePoint = activeDiscPoints[index];
 
     console.log(chosenActivePoint);
+}
+
+
+function drawPoint(p) {
+
+    points_graphics.beginFill('#fdc');
+    points_graphics.drawCircle(p.x, p.y, 3);
+    points_graphics.endStroke();
+
+    main_stage.update();
 }
