@@ -1,7 +1,8 @@
 
-var MAX_CANDIDATES = 20, INTERVAL = 1, MAX_BRIGHTNESS = 255*3;
+var MAX_CANDIDATES = 8, INTERVAL = 0, MAX_BRIGHTNESS = 255*3;
 var activeDiscPoints, inactiveDiscPoints;
 var searchRadiusInner, searchRadiusOuter;
+var tree;
 
 var range_graphics;
 
@@ -40,6 +41,7 @@ function startFindingDiscPoints() {
     activeDiscPoints.push(startPoint);
 
     updateSearchRadii();
+    initTree();
 
     processNextActivePoint();
 }
@@ -65,6 +67,7 @@ function processNextActivePoint() {
 
         if (testCandidate(candidate)) {
             drawPoint(candidate);
+            addPointToTree(candidate);
             activeDiscPoints.push(candidate);
             setPointInactive = false;
             break;
@@ -79,7 +82,15 @@ function processNextActivePoint() {
 
 function recordPointDetails(p) {
     var pixel = getPixel(image_data, p.x, p.y);
-    p.buffer = searchRadiusInner + brightness(pixel)/MAX_BRIGHTNESS * (searchRadiusOuter-searchRadiusInner);
+    p.brightness = brightness(pixel);
+    p.padding = searchRadiusInner + (1-p.brightness/MAX_BRIGHTNESS) * (searchRadiusOuter-searchRadiusInner);
+
+    p.treeCol = Math.floor(p.x / searchRadiusOuter);
+    p.treeRow = Math.floor(p.y / searchRadiusOuter);
+}
+
+function addPointToTree(p) {
+    tree[p.treeCol][p.treeRow].push(p);
 }
 
 function brightness(pixel) {
@@ -88,13 +99,18 @@ function brightness(pixel) {
 
 function testCandidate(candidate) {
 
-    var testPool = activeDiscPoints.concat(inactiveDiscPoints);
+    var testPool = [];
+    for (var i=-1; i<=1; i++) {
+        for (var j=-1; j<=1; j++) {
+            testPool = testPool.concat(tree[candidate.treeCol+i][candidate.treeRow+j]);
+        }
+    }
 
-    for (var i= 0, l=testPool.length; i<l; i++) {
+    for (i= 0, l=testPool.length; i<l; i++) {
         var testPoint = testPool[i];
         var dist = pointDistance(candidate, testPoint);
-        console.log(dist);
-        if (dist < (candidate.buffer + testPoint.buffer)/2) return false;
+
+        if (dist < (candidate.padding + testPoint.padding)/2) return false;
     }
     return true;
 }
@@ -108,7 +124,7 @@ function generateCandidate(p) {
     var theta = Math.random() * PI_2;
 
     var range = searchRadiusOuter - searchRadiusInner;
-    console.log(range);
+
     var radius = searchRadiusInner + Math.random() * range;
 
     var x = p.x + radius * Math.cos(theta);
@@ -144,9 +160,22 @@ function drawRange(p) {
 
 function drawPoint(p) {
 
-    points_graphics.beginFill('#fdc');
-    points_graphics.drawCircle(p.x, p.y, 1);
+    points_graphics.beginFill('#fff');
+    points_graphics.drawCircle(p.x, p.y,.75);
     points_graphics.endStroke();
 
     main_stage.update();
+}
+
+
+function initTree() {
+    var cols = Math.ceil(IMAGE_WIDTH / searchRadiusOuter);
+    var rows = Math.ceil(IMAGE_HEIGHT / searchRadiusOuter);
+    tree = {};
+    for (var i=-1; i<cols+1; i++) {
+        tree[i] = {};
+        for (var j=-1; j<rows+1; j++) {
+            tree[i][j] = [];
+        }
+    }
 }
