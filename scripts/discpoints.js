@@ -32,7 +32,7 @@ $(document).ready(function () {
 
     $('#disc-speed').on("input change", function(){
         $('#disc-speed-display').text($(this).val());
-        INTERVAL = parseInt($('#disc-speed').val());
+        INTERVAL = 1000 - parseInt($('#disc-speed').val());
     });
 
 });
