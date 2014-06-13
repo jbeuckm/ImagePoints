@@ -1,5 +1,5 @@
 
-var MAX_CANDIDATES = 16, INTERVAL = 0, MAX_BRIGHTNESS = 255*3;
+var MAX_CANDIDATES = 10, INTERVAL = 0, MAX_BRIGHTNESS = 255*3;
 var activeDiscPoints, inactiveDiscPoints;
 var searchRadiusInner, searchRadiusOuter, brightnessToDepth;
 var tree;
@@ -82,13 +82,17 @@ function processNextActivePoint() {
     var testIndex = Math.floor(Math.random() * activeDiscPoints.length);
     var testPoint = activeDiscPoints[testIndex];
 
+    drawRangePoint(testPoint, '#00f');
+
+
     var setPointInactive = true;
     for (var i=0; i<MAX_CANDIDATES; i++) {
         var candidate = generateCandidate(testPoint);
         recordPointDetails(candidate);
 
         if (testCandidate(candidate)) {
-            drawPoint(candidate, '#0f0', 1);
+            candidate.radius = .1 + brightnessToDepth * candidate.brightness/MAX_BRIGHTNESS;
+            drawPoint(candidate, '#0f0', candidate.radius);
             addPointToTree(candidate);
             activeDiscPoints.push(candidate);
             setPointInactive = false;
@@ -97,8 +101,8 @@ function processNextActivePoint() {
     }
     if (setPointInactive) {
         activeDiscPoints.splice(testIndex, 1);
-        drawPoint(testPoint, '#000', 1.1);
-        drawPoint(testPoint, '#fff', .1 + brightnessToDepth * testPoint.brightness/MAX_BRIGHTNESS);
+        drawPoint(testPoint, '#000', testPoint.radius+.1);
+        drawPoint(testPoint, '#fff', testPoint.radius);
         inactiveDiscPoints.push(testPoint);
     }
 
@@ -123,6 +127,8 @@ function brightness(pixel) {
 }
 
 function testCandidate(candidate) {
+
+    drawRangePoint(candidate, '#4ff');
 
     var testPool;
 
@@ -175,9 +181,9 @@ function generateCandidate(p) {
 }
 
 
-function drawRangePoint(p) {
+function drawRangePoint(p, color) {
 
-    explicit_graphics.beginStroke('#f00');
+    explicit_graphics.beginStroke(color || '#f00');
     explicit_graphics.beginFill(null);
     explicit_graphics.drawCircle(p.x, p.y, 4);
     explicit_graphics.endStroke();
