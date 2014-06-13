@@ -1,18 +1,47 @@
 
 var MAX_CANDIDATES = 16, INTERVAL = 0, MAX_BRIGHTNESS = 255*3;
 var activeDiscPoints, inactiveDiscPoints;
-var searchRadiusInner, searchRadiusOuter;
+var searchRadiusInner, searchRadiusOuter, brightnessToDepth;
 var tree;
 
 var range_graphics;
 
-$('#min-disc-spacing').change(function(e){
-    console.log(e);
+$(document).ready(function () {
+
+    range_graphics = new createjs.Graphics();
+    var range_shape = new createjs.Shape(range_graphics);
+    main_stage.addChild(range_shape);
+
+    $('#min-disc-spacing').on("input change", function(){
+        $('#min-disc-spacing-display').text($(this).val());
+        searchRadiusInner = parseFloat($('#min-disc-spacing').val());
+        if (searchRadiusOuter < searchRadiusInner * 1.1) {
+            searchRadiusOuter = searchRadiusInner * 1.1;
+            $('#max-disc-spacing').val(searchRadiusOuter);
+        }
+    });
+
+    $('#max-disc-spacing').on("input change", function(){
+        $('#max-disc-spacing-display').text($(this).val());
+        searchRadiusOuter = parseFloat($('#max-disc-spacing').val());
+        if (searchRadiusInner > searchRadiusOuter / 1.1) {
+            searchRadiusInner = searchRadiusOuter / 1.1;
+            $('#min-disc-spacing').val(searchRadiusInner);
+        }
+    });
+
+    $('#brightness-to-depth').on("input change", function(){
+        $('#brightness-to-depth-display').text($(this).val());
+        brightnessToDepth = parseFloat($('#brightness-to-depth').val());
+    });
+
 });
+
 
 function updateSearchRadii() {
     searchRadiusInner = parseFloat($('#min-disc-spacing').val());
     searchRadiusOuter = parseFloat($('#max-disc-spacing').val());
+    brightnessToDepth = parseFloat($('#brightness-to-depth').val());
 }
 
 
@@ -24,12 +53,6 @@ function resetDiscPoints() {
 function startFindingDiscPoints() {
 
     points_graphics.clear();
-
-    if (!range_graphics) {
-        range_graphics = new createjs.Graphics();
-        var range_shape = new createjs.Shape(range_graphics);
-        main_stage.addChild(range_shape);
-    }
 
     resetDiscPoints();
 
@@ -46,9 +69,8 @@ function startFindingDiscPoints() {
     processNextActivePoint();
 }
 
-function processNextActivePoint() {
 
-//    range_graphics.clear();
+function processNextActivePoint() {
 
     if (activeDiscPoints.length == 0) {
         console.log('finished disc points');
@@ -57,8 +79,6 @@ function processNextActivePoint() {
 
     var testIndex = ~~(Math.random() * activeDiscPoints.length);
     var testPoint = activeDiscPoints[testIndex];
-
-//    drawRange(testPoint);
 
     var setPointInactive = true;
     for (var i=0; i<MAX_CANDIDATES; i++) {
@@ -75,9 +95,11 @@ function processNextActivePoint() {
     }
     if (setPointInactive) {
         activeDiscPoints.splice(testIndex, 1);
-        drawPoint(testPoint, '#fff', 1.5);
+        drawPoint(testPoint, '#000', 1.1);
+        drawPoint(testPoint, '#fff', .1 + brightnessToDepth * testPoint.brightness/MAX_BRIGHTNESS);
         inactiveDiscPoints.push(testPoint);
     }
+
     setTimeout(processNextActivePoint, INTERVAL);
 }
 
@@ -134,7 +156,7 @@ function generateCandidate(p) {
 
     var range = searchRadiusOuter - searchRadiusInner;
 
-    var radius = searchRadiusInner + Math.random() * range;
+    var radius = searchRadiusInner + Math.random() * 2 * range;
 
     var x = p.x + radius * Math.cos(theta);
     var y = p.y + radius * Math.sin(theta);
@@ -188,3 +210,30 @@ function initTree() {
         }
     }
 }
+
+
+
+(function() {
+    var lastTime = 0;
+    var vendors = ['webkit', 'moz'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame =
+            window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+                timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
