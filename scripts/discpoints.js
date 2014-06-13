@@ -1,5 +1,5 @@
 
-var MAX_CANDIDATES = 8, INTERVAL = 0, MAX_BRIGHTNESS = 255*3;
+var MAX_CANDIDATES = 16, INTERVAL = 0, MAX_BRIGHTNESS = 255*3;
 var activeDiscPoints, inactiveDiscPoints;
 var searchRadiusInner, searchRadiusOuter;
 var tree;
@@ -48,7 +48,7 @@ function startFindingDiscPoints() {
 
 function processNextActivePoint() {
 
-    range_graphics.clear();
+//    range_graphics.clear();
 
     if (activeDiscPoints.length == 0) {
         console.log('finished disc points');
@@ -58,7 +58,7 @@ function processNextActivePoint() {
     var testIndex = ~~(Math.random() * activeDiscPoints.length);
     var testPoint = activeDiscPoints[testIndex];
 
-    drawRange(testPoint);
+//    drawRange(testPoint);
 
     var setPointInactive = true;
     for (var i=0; i<MAX_CANDIDATES; i++) {
@@ -66,7 +66,7 @@ function processNextActivePoint() {
         recordPointDetails(candidate);
 
         if (testCandidate(candidate)) {
-            drawPoint(candidate);
+            drawPoint(candidate, '#0f0', 1);
             addPointToTree(candidate);
             activeDiscPoints.push(candidate);
             setPointInactive = false;
@@ -75,6 +75,7 @@ function processNextActivePoint() {
     }
     if (setPointInactive) {
         activeDiscPoints.splice(testIndex, 1);
+        drawPoint(testPoint, '#fff', 1.5);
         inactiveDiscPoints.push(testPoint);
     }
     setTimeout(processNextActivePoint, INTERVAL);
@@ -99,12 +100,7 @@ function brightness(pixel) {
 
 function testCandidate(candidate) {
 
-    var testPool = [];
-    for (var i=-1; i<=1; i++) {
-        for (var j=-1; j<=1; j++) {
-            testPool = testPool.concat(tree[candidate.treeCol+i][candidate.treeRow+j]);
-        }
-    }
+    var testPool = buildTestPoolFromTree(candidate);
 
     for (i= 0, l=testPool.length; i<l; i++) {
         var testPoint = testPool[i];
@@ -115,8 +111,21 @@ function testCandidate(candidate) {
     return true;
 }
 
+function buildTestPoolFromTree(candidate) {
+    var testPool = [];
+    for (var i=-1; i<=1; i++) {
+        for (var j=-1; j<=1; j++) {
+            testPool = testPool.concat(tree[candidate.treeCol+i][candidate.treeRow+j]);
+        }
+    }
+    return testPool;
+}
+
+var dx, dy;
 function pointDistance(p1, p2) {
-    return Math.sqrt( (p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y) );
+    dx = p1.x - p2.x;
+    dy = p1.y - p2.y;
+    return Math.sqrt( dx*dx + dy*dy );
 }
 
 var PI_2 = 2 * Math.PI;
@@ -158,10 +167,10 @@ function drawRange(p) {
 }
 
 
-function drawPoint(p) {
+function drawPoint(p, color, radius) {
 
-    points_graphics.beginFill('#fff');
-    points_graphics.drawCircle(p.x, p.y,.75);
+    points_graphics.beginFill(color);
+    points_graphics.drawCircle(p.x, p.y, radius || .75);
     points_graphics.endStroke();
 
     main_stage.update();
