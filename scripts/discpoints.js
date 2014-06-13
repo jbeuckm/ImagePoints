@@ -122,26 +122,23 @@ function brightness(pixel) {
 
 function testCandidate(candidate) {
 
-    var testPool = buildTestPoolFromTree(candidate);
+    var testPool;
 
-    for (i= 0, l=testPool.length; i<l; i++) {
-        var testPoint = testPool[i];
-        var dist = pointDistance(candidate, testPoint);
+    for (var i=-1; i<=1; i++) {
+        for (var j=-1; j<=1; j++) {
+            testPool = tree[candidate.treeCol+i][candidate.treeRow+j];
 
-        if (dist < (candidate.padding + testPoint.padding)/2) return false;
+            for (k= 0, l=testPool.length; k<l; k++) {
+                var testPoint = testPool[k];
+                var dist = pointDistance(candidate, testPoint);
+
+                if (dist < (candidate.padding + testPoint.padding)/2) return false;
+            }
+        }
     }
     return true;
 }
 
-function buildTestPoolFromTree(candidate) {
-    var testPool = [];
-    for (var i=-1; i<=1; i++) {
-        for (var j=-1; j<=1; j++) {
-            testPool = testPool.concat(tree[candidate.treeCol+i][candidate.treeRow+j]);
-        }
-    }
-    return testPool;
-}
 
 var dx, dy;
 function pointDistance(p1, p2) {
