@@ -1,5 +1,6 @@
-var main_canvas, main_stage, image_bitmap, image_canvas, image_canvas_ctx;
+var main_canvas, main_stage, image_bitmap, image_canvas, image_canvas_ctx, image_holder;
 var image_data;
+var explicit_graphics, points_graphics, points_shape;
 
 var IMAGE_WIDTH, IMAGE_HEIGHT;
 
@@ -10,12 +11,6 @@ $(document).ready(function () {
 
     points_graphics = new createjs.Graphics();
     points_shape = new createjs.Shape(points_graphics);
-
-    blockSizeSlider = $('#blocksize-slider');
-    blockSizeSlider.slider({min: 1, max: 50, value: 10, step: .01}).bind('slide', blockSizeSliderSlide);
-
-    holeSizeSlider = $('#holesize-slider');
-    holeSizeSlider.slider({min: 1, max: 50, value: 10, step: .01}).bind('slide', holeSizeSliderSlide);
 
     finalWidthSlider = $('#final-width-slider');
     finalWidthSlider.slider({min: 1, max: 50, value: 10, step: .0625}).bind('slide', finalWidthSlide);
@@ -34,6 +29,7 @@ $(document).ready(function () {
 
     $('#grid-button').click(gridButton);
     $('#disc-button').click(startFindingDiscPoints);
+
 });
 
 
@@ -71,6 +67,10 @@ function handleImageLoaded() {
     main_stage.addChild(new createjs.Shape(g));
     main_stage.addChild(image_bitmap);
     main_stage.addChild(points_shape);
+
+    explicit_graphics = new createjs.Graphics();
+    var range_shape = new createjs.Shape(explicit_graphics);
+    main_stage.addChild(range_shape);
 
     image_canvas = $('<canvas width="' + img.width + '" height="' + img.height + '"></canvas>');
     image_canvas_ctx = $(image_canvas).get(0).getContext("2d");

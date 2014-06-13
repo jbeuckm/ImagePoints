@@ -1,4 +1,4 @@
-var holes, points_graphics, points_shape;
+var holes;
 
 var blockSizeSlider, blockSize;
 var holeSizeSlider, holeSize;
@@ -7,7 +7,15 @@ var finalWidthSlider;
 var currentRow, currentJobNo;
 var imagepoints_worker;
 
+$(document).ready(function(){
 
+    blockSizeSlider = $('#blocksize-slider');
+    blockSizeSlider.slider({min: 1, max: 50, value: 10, step: .01}).bind('slide', blockSizeSliderSlide);
+
+    holeSizeSlider = $('#holesize-slider');
+    holeSizeSlider.slider({min: 1, max: 50, value: 10, step: .01}).bind('slide', holeSizeSliderSlide);
+
+});
 
 function gridButton() {
     points_graphics.clear();

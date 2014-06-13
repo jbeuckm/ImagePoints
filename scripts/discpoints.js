@@ -4,13 +4,8 @@ var activeDiscPoints, inactiveDiscPoints;
 var searchRadiusInner, searchRadiusOuter, brightnessToDepth;
 var tree;
 
-var range_graphics;
 
 $(document).ready(function () {
-
-    range_graphics = new createjs.Graphics();
-    var range_shape = new createjs.Shape(range_graphics);
-    main_stage.addChild(range_shape);
 
     $('#min-disc-spacing').on("input change", function(){
         $('#min-disc-spacing-display').text($(this).val());
@@ -35,6 +30,11 @@ $(document).ready(function () {
         brightnessToDepth = parseFloat($('#brightness-to-depth').val());
     });
 
+    $('#disc-speed').on("input change", function(){
+        $('#disc-speed-display').text($(this).val());
+        INTERVAL = parseInt($('#disc-speed').val());
+    });
+
 });
 
 
@@ -57,8 +57,8 @@ function startFindingDiscPoints() {
     resetDiscPoints();
 
     var startPoint = {
-        x: ~~(Math.random() * IMAGE_WIDTH),
-        y: ~~(Math.random() * IMAGE_HEIGHT)
+        x: Math.floor(Math.random() * IMAGE_WIDTH),
+        y: Math.floor(Math.random() * IMAGE_HEIGHT)
     };
     drawPoint(startPoint);
     activeDiscPoints.push(startPoint);
@@ -72,12 +72,14 @@ function startFindingDiscPoints() {
 
 function processNextActivePoint() {
 
+    explicit_graphics.clear();
+
     if (activeDiscPoints.length == 0) {
         console.log('finished disc points');
         return;
     }
 
-    var testIndex = ~~(Math.random() * activeDiscPoints.length);
+    var testIndex = Math.floor(Math.random() * activeDiscPoints.length);
     var testPoint = activeDiscPoints[testIndex];
 
     var setPointInactive = true;
@@ -130,6 +132,9 @@ function testCandidate(candidate) {
 
             for (k= 0, l=testPool.length; k<l; k++) {
                 var testPoint = testPool[k];
+
+                drawRangePoint(testPoint);
+
                 var dist = pointDistance(candidate, testPoint);
 
                 if (dist < (candidate.padding + testPoint.padding)/2) return false;
@@ -170,17 +175,24 @@ function generateCandidate(p) {
 }
 
 
+function drawRangePoint(p) {
+
+    explicit_graphics.beginStroke('#f00');
+    explicit_graphics.beginFill(null);
+    explicit_graphics.drawCircle(p.x, p.y, 4);
+    explicit_graphics.endStroke();
+}
 function drawRange(p) {
 
-    range_graphics.beginStroke('#f00');
-    range_graphics.beginFill(null);
-    range_graphics.drawCircle(p.x, p.y, searchRadiusInner);
-    range_graphics.endStroke();
+    explicit_graphics.beginStroke('#f00');
+    explicit_graphics.beginFill(null);
+    explicit_graphics.drawCircle(p.x, p.y, searchRadiusInner);
+    explicit_graphics.endStroke();
 
-    range_graphics.beginStroke('#f00');
-    range_graphics.beginFill(null);
-    range_graphics.drawCircle(p.x, p.y, searchRadiusOuter);
-    range_graphics.endStroke();
+    explicit_graphics.beginStroke('#f00');
+    explicit_graphics.beginFill(null);
+    explicit_graphics.drawCircle(p.x, p.y, searchRadiusOuter);
+    explicit_graphics.endStroke();
 
     main_stage.update();
 }
@@ -200,7 +212,7 @@ function initTree() {
     var cols = Math.ceil(IMAGE_WIDTH / searchRadiusOuter);
     var rows = Math.ceil(IMAGE_HEIGHT / searchRadiusOuter);
     tree = {};
-    for (var i=-1; i<cols+1; i++) {
+    for (var i=-1; i<=cols+1; i++) {
         tree[i] = {};
         for (var j=-1; j<rows+1; j++) {
             tree[i][j] = [];
