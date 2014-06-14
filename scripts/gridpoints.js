@@ -146,5 +146,10 @@ function generateGcode() {
         }
     }
 
-    $('#g-code').text(gcode);
+//    $('#g-code').text(gcode);
+    var data = "application/text;charset=utf-8," + encodeURIComponent(gcode);
+    var gcode_url = "data:" + data;
+//    window.open(gcode_url);
+
+    downloadWithName(gcode_url, "imagepoints.nc");
 }

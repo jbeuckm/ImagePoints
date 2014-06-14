@@ -100,3 +100,23 @@ function setPixel(imageData, x, y, r, g, b, a) {
     imageData.data[index + 2] = b;
     imageData.data[index + 3] = a;
 }
+
+
+function downloadWithName(uri, name) {
+
+    function eventFire(el, etype){
+        if (el.fireEvent) {
+            (el.fireEvent('on' + etype));
+        } else {
+            var evObj = document.createEvent('Events');
+            evObj.initEvent(etype, true, false);
+            el.dispatchEvent(evObj);
+        }
+    }
+
+    var link = document.createElement("a");
+    link.download = name;
+    link.href = uri;
+    eventFire(link, "click");
+
+}
