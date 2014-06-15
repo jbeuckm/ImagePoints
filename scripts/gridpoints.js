@@ -9,6 +9,9 @@ var imagepoints_worker;
 
 $(document).ready(function(){
 
+    imagepoints_worker = new Worker('scripts/gridpoints_worker.js?v=' + Math.random());
+    imagepoints_worker.addEventListener('message', handleWorkerMessage, false);
+
     blockSizeSlider = $('#blocksize-slider');
     blockSizeSlider.slider({min: 1, max: 50, value: 10, step: .01}).bind('slide', blockSizeSliderSlide);
 

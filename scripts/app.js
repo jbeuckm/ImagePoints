@@ -21,8 +21,6 @@ $(document).ready(function () {
         main_stage.update();
     });
 
-    imagepoints_worker = new Worker('scripts/gridpoints_worker.js?v=' + Math.random());
-    imagepoints_worker.addEventListener('message', handleWorkerMessage, false);
 
     $('#load-image-button').click(loadImage);
     $('#g-code-button').click(generateGcode);
