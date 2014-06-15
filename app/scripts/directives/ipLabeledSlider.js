@@ -4,7 +4,8 @@ angular.module('imagepoints').directive('ipLabeledSlider', function(){
         restrict: 'E',
         link: function(scope, element, attributes) {
             console.log(attributes);
-        }
+        },
+        templateUrl: 'app/scripts/directives/ipLabeledSlider.html'
     }
 });
 
