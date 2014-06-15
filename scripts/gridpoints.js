@@ -21,7 +21,6 @@ $(document).ready(function(){
 });
 
 function gridButton() {
-    points_graphics.clear();
     resetGridPoints();
     updateNextRowPoints();
 }
@@ -74,14 +73,14 @@ function drawRowPoints(points) {
 
         var d = points[x];
 
-        points_graphics.beginFill('#fdc');
-        points_graphics.drawCircle(x * blockSize, currentRow * blockSize, d * holeSize);
-        points_graphics.endStroke();
+        main_ctx.fillStyle = '#fdc';
+        main_ctx.beginPath();
+        main_ctx.arc(x * blockSize, currentRow * blockSize, d * holeSize, 0, Math.PI*2, true);
+        main_ctx.closePath();
+        main_ctx.fill();
 
         holes[currentRow][x] = d * holeSize;
     }
-
-    main_stage.update();
 
     currentRow++;
 
@@ -92,12 +91,10 @@ function drawRowPoints(points) {
 }
 
 function blockSizeSliderSlide() {
-    points_graphics.clear();
     resetGridPoints();
     updateNextRowPoints();
 }
 function holeSizeSliderSlide() {
-    points_graphics.clear();
     resetGridPoints();
     updateNextRowPoints();
 }

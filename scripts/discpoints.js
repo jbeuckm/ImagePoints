@@ -39,6 +39,7 @@ $(document).ready(function () {
 function startFindingDiscPoints() {
 
     updateSearchRadii();
+    main_canvas.width = main_canvas.width;
 
     discpoints_worker.postMessage({
         cmd: 'begin',
@@ -49,6 +50,7 @@ function startFindingDiscPoints() {
     })
 }
 
+
 function handleWorkerMessage(e) {
 
     var data = e.data;
@@ -56,11 +58,13 @@ function handleWorkerMessage(e) {
     switch (data.cmd) {
 
         case 'point_settled':
-            drawPoint(data.point, "#fff");
+            drawPoint(data.point, "#fff", data.point.radius);
+            break;
+
+        case "complete":
             break;
     }
 }
-
 
 function updateSearchRadii() {
     searchRadiusInner = parseFloat($('#min-disc-spacing').val());
@@ -70,36 +74,14 @@ function updateSearchRadii() {
 
 
 
-function drawRangePoint(p, color) {
-
-    explicit_graphics.beginStroke(color || '#f00');
-    explicit_graphics.beginFill(null);
-    explicit_graphics.drawCircle(p.x, p.y, 4);
-    explicit_graphics.endStroke();
-}
-function drawRange(p) {
-
-    explicit_graphics.beginStroke('#f00');
-    explicit_graphics.beginFill(null);
-    explicit_graphics.drawCircle(p.x, p.y, searchRadiusInner);
-    explicit_graphics.endStroke();
-
-    explicit_graphics.beginStroke('#f00');
-    explicit_graphics.beginFill(null);
-    explicit_graphics.drawCircle(p.x, p.y, searchRadiusOuter);
-    explicit_graphics.endStroke();
-
-    main_stage.update();
-}
-
-
 function drawPoint(p, color, radius) {
 
-    points_graphics.beginFill(color);
-    points_graphics.drawCircle(p.x, p.y, radius || .75);
-    points_graphics.endStroke();
+    main_ctx.fillStyle = color;
+    main_ctx.beginPath();
+    main_ctx.arc(p.x, p.y, radius || .75, 0, Math.PI*2, true);
+    main_ctx.closePath();
+    main_ctx.fill();
 
-    main_stage.update();
 }
 
 

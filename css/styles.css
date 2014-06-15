@@ -1,4 +1,18 @@
 
+#holder {
+  position: relative;
+  height: 1000px;
+}
+#black-background {
+  position: absolute;
+  background-color: #000;
+}
+#main-image {
+  position: absolute;
+}
+#main-canvas {
+  position: absolute;
+}
 #max-disc-spacing, #min-disc-spacing {
   width: 800px;
 }
