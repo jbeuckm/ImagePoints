@@ -1,8 +1,5 @@
-var main_canvas, main_ctx, image_bitmap, image_canvas, image_canvas_ctx, image_holder;
+var main_canvas, main_ctx, image_canvas, image_canvas_ctx;
 var image_data;
-var explicit_graphics, points_graphics, points_shape;
-
-var IMAGE_WIDTH, IMAGE_HEIGHT;
 
 $(document).ready(function () {
 
@@ -53,9 +50,7 @@ function handleImageLoaded() {
 
     console.log('loaded image ' + img.width + ', ' + img.height);
 
-    IMAGE_WIDTH = img.width;
-    IMAGE_HEIGHT = img.height;
-    $("#black-background").width(IMAGE_WIDTH).height(IMAGE_HEIGHT);
+    $("#black-background").width(img.width).height(img.height);
 
     image_canvas = $('<canvas width="' + img.width + '" height="' + img.height + '"></canvas>');
     image_canvas_ctx = $(image_canvas).get(0).getContext("2d");
