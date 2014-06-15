@@ -58,7 +58,6 @@ function updateNextRowPoints() {
 
 
 
-
 function drawRowPoints(points) {
 
     holes[currentRow] = new Array();
