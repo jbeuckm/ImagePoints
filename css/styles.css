@@ -1,4 +1,12 @@
 
+label {
+  display: inline-block;
+  width: 150px;
+}
+input[type="range"] {
+  width: 500px;
+}
+
 #holder {
   position: relative;
   height: 1000px;

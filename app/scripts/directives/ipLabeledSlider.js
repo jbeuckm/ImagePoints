@@ -17,7 +17,7 @@ angular.module('imagepoints').directive('ipLabeledSlider', function(){
             scope.step = attributes.step;
 
             scope.$watch('value', function(val, old){
-                scope.value = parseInt(val);
+                scope.value = parseFloat(val);
             });
 
             scope.label = element[0].innerText;
