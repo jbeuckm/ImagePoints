@@ -16,10 +16,6 @@
   <script src="scripts/gridpoints.js"></script>
   <script src="scripts/discpoints.js"></script>
 
-  <script src="bower_components/angular/angular.js"></script>
-  <script src="app/scripts/app.js"></script>
-  <script src="app/scripts/directives/ipLabeledSlider.js"></script>
-
 </head>
 
 <body>
@@ -39,6 +35,8 @@
     <ip-labeled-slider label="Hole Spacing" min ="1" max="50.0" step ="0.01" ng-model="blockSize"></ip-labeled-slider>
     <ip-labeled-slider label="Hole Size" min ="1" max="50.0" step ="0.01" ng-model="holeSize"></ip-labeled-slider>
 
+    <input type="button" ng-click="generateGridPoints()" value="generate grid points"/>
+
   </fieldset>
 
   <div id="grid-controls">
@@ -53,6 +51,8 @@
     <ip-labeled-slider label="Min Spacing" min ="0.1" max="100.0" step ="0.01" ng-model="minSpacing"></ip-labeled-slider>
     <ip-labeled-slider label="Max Spacing" min ="0.1" max="100.0" step ="0.01" ng-model="maxSpacing"></ip-labeled-slider>
     <ip-labeled-slider label="Brightness Effect" min ="0" max="10" step ="0.01" ng-model="brightnessEffect"></ip-labeled-slider>
+
+    <input type="button" ng-click="generateDiscPoints()" value="generate disc points"/>
 
   </fieldset>
 
@@ -99,6 +99,13 @@
   <!--
   <textarea id="g-code" cols="20" rows="100"></textarea>
 -->
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="app/scripts/app.js"></script>
+  <script src="app/scripts/directives/ipLabeledSlider.js"></script>
+  <script src="app/scripts/controllers/GridController.js"></script>
+  <script src="app/scripts/controllers/DiscController.js"></script>
+
 </body>
 
 </html>
