@@ -22,7 +22,6 @@ $(document).ready(function () {
     $('#g-code-button').click(generateGcode);
 
     $('#grid-button').click(gridButton);
-    $('#disc-button').click(startFindingDiscPoints);
 
 });
 

@@ -27,7 +27,7 @@ angular.module("imagepoints").controller("DiscController", ['$scope', function($
         switch (data.cmd) {
 
             case 'point_settled':
-                drawPoint(data.point, "#fff", data.point.radius);
+                $scope.drawPoint(data.point, "#fff", data.point.radius);
                 break;
 
             case "complete":

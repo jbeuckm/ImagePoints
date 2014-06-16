@@ -14,7 +14,6 @@
 
   <script src="scripts/imagepoints.js"></script>
   <script src="scripts/gridpoints.js"></script>
-  <script src="scripts/discpoints.js"></script>
 
 </head>
 
@@ -56,29 +55,6 @@
 
   </fieldset>
 
-  <div id="disc-controls">
-
-    <div>
-      <label for="min-disc-spacing">Min Spacing</label>
-      <input id="min-disc-spacing" type ="range" min ="0.1" max="100.0" step ="0.01" value="6"/>
-      <span id="min-disc-spacing-display"></span>
-    </div>
-
-    <div>
-      <label for="max-disc-spacing">Max Spacing</label>
-      <input id="max-disc-spacing" type ="range" min ="0.1" max="100.0" step ="0.01" value="12"/>
-      <span id="max-disc-spacing-display"></span>
-    </div>
-
-    <div>
-      <label for="brightness-to-depth">Brightness Effect</label>
-      <input id="brightness-to-depth" type ="range" min ="0" max="10" step ="0.01" value="1.5"/>
-      <span id="brightness-to-depth-display"></span>
-    </div>
-
-    <input type="button" id="disc-button" value="generate disc points"/>
-
-  </div>
 
   <div>
     <label for="show-image">show image</label>
