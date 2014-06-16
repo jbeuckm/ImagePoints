@@ -11,7 +11,7 @@ angular.module('imagepoints').directive('ipLabeledSlider', function(){
             value: "=ngModel"
         },
         link: function(scope, element, attributes) {
-            console.log(attributes);
+
             scope.min = attributes.min;
             scope.max = attributes.max;
             scope.step = attributes.step;
@@ -21,7 +21,6 @@ angular.module('imagepoints').directive('ipLabeledSlider', function(){
             });
 
             scope.label = element[0].innerText;
-            console.log(element[0]);
         },
         templateUrl: 'app/scripts/directives/ipLabeledSlider.html'
     }
