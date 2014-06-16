@@ -2,19 +2,19 @@
 angular.module('imagepoints').directive('ipLabeledSlider', function(){
     return {
         restrict: 'E',
+        require: "^ngModel",
         scope: {
             min: "@",
             max: "@",
             step: "@",
-            value: "@",
-            label: "@"
+            label: "@",
+            value: "=ngModel"
         },
         link: function(scope, element, attributes) {
             console.log(attributes);
             scope.min = attributes.min;
             scope.max = attributes.max;
             scope.step = attributes.step;
-            scope.value = attributes.value;
 
             scope.$watch('value', function(val, old){
                 scope.value = parseInt(val);
