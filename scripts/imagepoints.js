@@ -6,8 +6,6 @@ $(document).ready(function () {
     main_canvas = $('#main-canvas').get(0);
     main_ctx = main_canvas.getContext("2d");
 
-    finalWidthSlider = $('#final-width-slider');
-    finalWidthSlider.slider({min: 1, max: 50, value: 10, step: .0625}).bind('slide', finalWidthSlide);
 
     var showImageCheckbox = $('#show-image');
     showImageCheckbox.change(function () {
@@ -19,9 +17,7 @@ $(document).ready(function () {
     });
 
     $('#load-image-button').click(loadImage);
-    $('#g-code-button').click(generateGcode);
-
-    $('#grid-button').click(gridButton);
+//    $('#g-code-button').click(generateGcode);
 
 });
 

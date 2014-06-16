@@ -7,13 +7,9 @@
 
   <link rel="stylesheet" href="css/styles.css"/>
 
-  <link type="text/css" href="bower_components/jquery-ui/themes/base/jquery-ui.css" rel="stylesheet" />
-
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
 
   <script src="scripts/imagepoints.js"></script>
-  <script src="scripts/gridpoints.js"></script>
 
 </head>
 
@@ -38,12 +34,6 @@
 
   </fieldset>
 
-  <div id="grid-controls">
-    blocksize: <div id="blocksize-slider"></div>
-    holesize: <div id="holesize-slider"></div>
-    <input type="button" id="grid-button" value="generate grid points"/>
-  </div>
-
   <fieldset ng-controller="DiscController">
     <legend>Modified Poisson Disc Tool</legend>
 
@@ -67,14 +57,18 @@
     <canvas id="main-canvas" width="1000" height="1000">You need canvas support for this.</canvas>
   </div>
 
-  final width: <div id="final-width-slider"></div>
-  <input type="text" id="final-width-value"/>
-  <input type="text" id="final-height-value"/>
 
-  <input type="button" value="produce g-code" id="g-code-button"/><br>
-  <!--
-  <textarea id="g-code" cols="20" rows="100"></textarea>
--->
+  <fieldset ng-controller="OutputController">
+    <legend>Output G-code</legend>
+    <ip-labeled-slider label="Output Width" min ="1" max="50" step =".0625" ng-model="outputWidth"></ip-labeled-slider>
+
+    <input type="text" id="final-width-value"/>
+    <input type="text" id="final-height-value"/>
+
+    <input type="button" value="produce g-code" ng-click="outputGcode()"/><br>
+
+  </fieldset>
+
 
   <script src="bower_components/angular/angular.js"></script>
   <script src="app/scripts/app.js"></script>
