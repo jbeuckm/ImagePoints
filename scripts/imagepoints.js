@@ -3,8 +3,8 @@ var image_data;
 
 $(document).ready(function () {
 
-    main_canvas = $('#main-canvas').get(0);
-    main_ctx = main_canvas.getContext("2d");
+//    main_canvas = $('#main-canvas').get(0);
+//    main_ctx = main_canvas.getContext("2d");
 
 
     var showImageCheckbox = $('#show-image');
@@ -16,27 +16,11 @@ $(document).ready(function () {
         }
     });
 
-    $('#load-image-button').click(loadImage);
+//    $('#load-image-button').click(loadImage);
 //    $('#g-code-button').click(generateGcode);
 
 });
 
-
-function loadImage() {
-    var url;
-
-    if ($('#use-proxy').is(':checked')) {
-        url = 'ba-simple-proxy.php?mode=native&url=' + $('#image-url').val();
-    }
-    else {
-        url = $('#image-url').val();
-    }
-
-    // update stage when image data is available to display
-    var img = $('#main-image').get(0);
-    img.onload = handleImageLoaded;
-    img.src = url;
-}
 
 
 function handleImageLoaded() {

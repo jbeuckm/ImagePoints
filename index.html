@@ -13,7 +13,7 @@
 
 </head>
 
-<body>
+<body ng-controller="ImagepointsController">
 
   <div>
     <label for="use-proxy">use proxy</label>
@@ -21,7 +21,7 @@
   </div>
 
   <label for="image-url">URL:</label> <input type="text" id="image-url" size="200" value="img/child.jpg"/>
-  <input type="button" id="load-image-button" value="load image"/>
+  <input type="button" id="load-image-button" value="load image" ng-click="loadImage()"/>
   <br>
 
   <fieldset ng-controller="GridController">
@@ -58,7 +58,7 @@
   </div>
 
 
-  <fieldset ng-controller="OutputController">
+  <fieldset>
     <legend>Output G-code</legend>
     <ip-labeled-slider label="Output Width" min ="1" max="50" step =".0625" ng-model="outputWidth"></ip-labeled-slider>
 
