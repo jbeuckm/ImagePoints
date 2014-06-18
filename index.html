@@ -61,11 +61,9 @@
     <legend>Output G-code</legend>
 
     <ip-labeled-slider label="Output Width" min ="1" max="50" step =".0625" ng-model="outputWidth"></ip-labeled-slider>
-    <input type="text" ng-model="outputWidth"/>
     <ip-labeled-slider label="Output Height" min ="1" max="50" step =".0625" ng-model="outputHeight"></ip-labeled-slider>
-    <input type="text" ng-model="outputHeight"/>
 
-    <input type="button" value="produce g-code" ng-click="outputGcode()"/><br>
+    <input type="button" value="produce g-code" ng-click="generateGcode()"/><br>
 
   </fieldset>
 

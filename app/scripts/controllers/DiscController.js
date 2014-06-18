@@ -8,7 +8,7 @@ angular.module("imagepoints").controller("DiscController", ['$scope', function($
 
     $scope.generateDiscPoints = function() {
 
-        $scope.main_canvas.width = $scope.main_canvas.width;
+        $scope.clearPoints();
 
         discpoints_worker.postMessage({
             cmd: 'begin',
@@ -27,7 +27,7 @@ angular.module("imagepoints").controller("DiscController", ['$scope', function($
         switch (data.cmd) {
 
             case 'point_settled':
-                $scope.drawPoint(data.point, "#fff", data.point.radius);
+                $scope.drawPoint(data.point, "#fff");
                 break;
 
             case "complete":
@@ -35,15 +35,6 @@ angular.module("imagepoints").controller("DiscController", ['$scope', function($
         }
     };
 
-    $scope.drawPoint = function(p, color, radius) {
-
-        $scope.main_ctx.fillStyle = color;
-        $scope.main_ctx.beginPath();
-        $scope.main_ctx.arc(p.x, p.y, radius || .75, 0, Math.PI*2, true);
-        $scope.main_ctx.closePath();
-        $scope.main_ctx.fill();
-
-    };
 
     discpoints_worker = new Worker('app/scripts/controllers/discpoints_worker.js?v=' + Math.random());
     discpoints_worker.addEventListener('message', $scope.handleWorkerMessage, false);
