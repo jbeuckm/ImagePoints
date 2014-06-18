@@ -9,8 +9,6 @@
 
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
-  <script src="scripts/imagepoints.js"></script>
-
 </head>
 
 <body ng-controller="ImagepointsController">
@@ -20,7 +18,7 @@
     <input id="use-proxy" type="checkbox"/>
   </div>
 
-  <label for="image-url">URL:</label> <input type="text" id="image-url" size="200" value="img/child.jpg"/>
+  <label for="image-url">URL:</label> <input type="text" id="image-url" size="200" ng-model="imageUrl"/>
   <input type="button" id="load-image-button" value="load image" ng-click="loadImage()"/>
   <br>
 
@@ -48,12 +46,13 @@
 
   <div>
     <label for="show-image">show image</label>
-    <input id="show-image" type="checkbox" checked/>
+    <input id="show-image" type="checkbox" checked ng-model="showImage"/>
   </div>
 
   <div id="holder">
     <div id="black-background"></div>
-    <img id="main-image"/>
+
+    <img id="main-image" ng-show="showImage"/>
     <canvas id="main-canvas" width="1000" height="1000">You need canvas support for this.</canvas>
   </div>
 
