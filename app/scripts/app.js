@@ -11,9 +11,11 @@ angular.module("imagepoints").controller("ImagepointsController", ['$scope', fun
     $scope.main_ctx = $scope.main_canvas.getContext("2d");
 
     $scope.imageUrl = "img/child.jpg";
+    $scope.showImage = true;
+
     $scope.outputWidth = 10;
     $scope.outputHeight = 10;
-    $scope.showImage = true;
+    $scope.holes = [];
 
     $scope.clearPoints = function() {
         $scope.main_canvas.width = $scope.main_canvas.width;
@@ -44,6 +46,9 @@ angular.module("imagepoints").controller("ImagepointsController", ['$scope', fun
         var img = this;
 
         console.log('loaded image ' + img.width + ', ' + img.height);
+
+        $scope.main_canvas.width = img.width;
+        $scope.main_canvas.height = img.height;
 
         angular.element("#black-background").width(img.width).height(img.height);
 

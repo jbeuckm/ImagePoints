@@ -1,19 +1,23 @@
 
 label {
   display: inline-block;
-  width: 150px;
+  width: 120px;
 }
 input[type="range"] {
-  width: 500px;
+  width: 350px;
+}
+fieldset {
+  width: 550px;
 }
 
 #holder {
   position: relative;
-  height: 1000px;
 }
 #black-background {
   position: absolute;
   background-color: #000;
+  top: 0;
+  left: 0;
 }
 #main-image {
   position: absolute;
@@ -23,4 +27,8 @@ input[type="range"] {
 }
 #max-disc-spacing, #min-disc-spacing {
   width: 800px;
+}
+
+td {
+  vertical-align: top;
 }
