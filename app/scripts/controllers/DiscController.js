@@ -8,11 +8,11 @@ angular.module("imagepoints").controller("DiscController", ['$scope', function($
 
     $scope.generateDiscPoints = function() {
 
-        main_canvas.width = main_canvas.width;
+        $scope.main_canvas.width = $scope.main_canvas.width;
 
         discpoints_worker.postMessage({
             cmd: 'begin',
-            image_data: image_data,
+            image_data: $scope.image_data,
             searchRadiusInner: $scope.minSpacing,
             searchRadiusOuter: $scope.maxSpacing,
             brightnessToDepth: $scope.brightnessEffect
@@ -37,11 +37,11 @@ angular.module("imagepoints").controller("DiscController", ['$scope', function($
 
     $scope.drawPoint = function(p, color, radius) {
 
-        main_ctx.fillStyle = color;
-        main_ctx.beginPath();
-        main_ctx.arc(p.x, p.y, radius || .75, 0, Math.PI*2, true);
-        main_ctx.closePath();
-        main_ctx.fill();
+        $scope.main_ctx.fillStyle = color;
+        $scope.main_ctx.beginPath();
+        $scope.main_ctx.arc(p.x, p.y, radius || .75, 0, Math.PI*2, true);
+        $scope.main_ctx.closePath();
+        $scope.main_ctx.fill();
 
     };
 
