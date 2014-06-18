@@ -14,6 +14,7 @@ angular.module("imagepoints").controller("ImagepointsController", ['$scope', fun
     $scope.outputWidth = 10;
     $scope.showImage = true;
 
+    $scope.holes = [[0]];
 
     $scope.loadImage = function() {
         var url;
@@ -48,6 +49,23 @@ angular.module("imagepoints").controller("ImagepointsController", ['$scope', fun
         $scope.image_data = $scope.image_canvas_ctx.getImageData(0, 0, img.width, img.height);
 
     };
+
+    $scope.$watch("outputWidth", function(newValue, oldValue){
+
+        if (!$scope.image_canvas_ctx) return;
+
+        var ratio = $scope.image_canvas_ctx.canvas.height / $scope.image_canvas_ctx.canvas.width;
+
+        $scope.outputHeight = newValue * ratio;
+    });
+    $scope.$watch("outputHeight", function(newValue, oldValue){
+
+        if (!$scope.image_canvas_ctx) return;
+
+        var ratio = $scope.image_canvas_ctx.canvas.height / $scope.image_canvas_ctx.canvas.width;
+
+        $scope.outputWidth = newValue / ratio;
+    });
 
 
     $scope.outputGcode = function() {

@@ -5,7 +5,12 @@ angular.module("imagepoints").controller("GridController", ['$scope', function($
     $scope.holeSize = 10;
 
     $scope.generateGridPoints = function() {
-        $scope.resetGridPoints();
+        $scope.main_canvas.width = $scope.main_canvas.width;
+
+        $scope.currentRow = 0;
+        $scope.holes = new Array();
+        $scope.currentJobNo = (new Date).getTime();
+
         $scope.updateNextRowPoints();
     };
 
@@ -71,23 +76,6 @@ angular.module("imagepoints").controller("GridController", ['$scope', function($
     };
 
 
-    $scope.resetGridPoints = function() {
-        $scope.currentRow = 0;
-        $scope.holes = new Array();
-        $scope.currentJobNo = (new Date).getTime();
-    };
-
-
-    $scope.finalWidthSlide = function() {
-        var cols = holes.length;
-        var rows = holes[0].length;
-        var blockSpacing = finalWidthSlider.slider('value') / cols;
-        console.log(cols, rows);
-
-        $('#final-width-value').val(cols * blockSpacing);
-        $('#final-height-value').val(rows * blockSpacing);
-    };
-
     $scope.DEPTH_THRESHOLD = .001;
 
     $scope.generateGcode = function() {
@@ -118,15 +106,13 @@ angular.module("imagepoints").controller("GridController", ['$scope', function($
             }
         }
 
-//    $('#g-code').text(gcode);
         var data = "application/text;charset=utf-8," + encodeURIComponent(gcode);
         var gcode_url = "data:" + data;
-//    window.open(gcode_url);
 
         $scope.downloadWithName(gcode_url, "imagepoints.nc");
     };
 
-    $scope.imagepoints_worker = new Worker('scripts/gridpoints_worker.js?v=' + Math.random());
+    $scope.imagepoints_worker = new Worker('app/scripts/controllers/gridpoints_worker.js?v=' + Math.random());
     $scope.imagepoints_worker.addEventListener('message', $scope.handleWorkerMessage, false);
 
 }]);
