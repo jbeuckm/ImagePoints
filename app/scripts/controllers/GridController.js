@@ -71,7 +71,6 @@ angular.module("imagepoints").controller("GridController", ['$scope', function($
     };
 
 
-
     $scope.imagepoints_worker = new Worker('app/scripts/controllers/gridpoints_worker.js?v=' + Math.random());
     $scope.imagepoints_worker.addEventListener('message', $scope.handleWorkerMessage, false);
 

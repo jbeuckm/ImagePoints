@@ -35,7 +35,6 @@ angular.module("imagepoints").controller("DiscController", ['$scope', function($
         }
     };
 
-
     discpoints_worker = new Worker('app/scripts/controllers/discpoints_worker.js?v=' + Math.random());
     discpoints_worker.addEventListener('message', $scope.handleWorkerMessage, false);
 
