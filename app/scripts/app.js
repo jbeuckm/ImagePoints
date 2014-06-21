@@ -1,6 +1,6 @@
 
 
-var app = angular.module("imagepoints", []).config(function(){
+var app = angular.module("imagepoints", ['mgcrea.ngStrap']).config(function(){
 
 });
 

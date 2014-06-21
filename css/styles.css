@@ -4,10 +4,13 @@ label {
   width: 120px;
 }
 input[type="range"] {
-  width: 350px;
+  display: inline-block !important;
+  width: 300px !important;
 }
 fieldset {
   width: 550px;
+  background-color: #eee;
+  border: 1px solid grey;
 }
 
 #holder {
@@ -31,4 +34,12 @@ fieldset {
 
 td {
   vertical-align: top;
+  padding: 10px !important;
+}
+
+legend.scheduler-border {
+  width:inherit; /* Or auto */
+  padding:0 10px; /* To give a bit of padding on the left and right */
+  border-bottom:none !important;
+  padding: 10px !important;
 }

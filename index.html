@@ -5,7 +5,13 @@
 
   <title>Image Points Renderer</title>
 
-  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/angular-motion.min.css">
+  <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/bootstrap-additions.min.css">
+  <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/libraries.min.css">
+  <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/main.min.css">
 
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
@@ -55,7 +61,7 @@
 
     <div>
       <label for="use-proxy">use proxy</label>
-      <input id="use-proxy" type="checkbox" ng-model="useProxy"/>
+      <input id="use-proxy" type="checkbox" ng-model="useProxy" bs-checkbox/>
     </div>
 
     <label for="image-url">URL:</label> <input type="text" id="image-url" size="50" ng-model="imageUrl"/>
@@ -64,7 +70,7 @@
 
     <div>
       <label for="show-image">show image</label>
-      <input id="show-image" type="checkbox" checked ng-model="showImage"/>
+      <input id="show-image" type="checkbox" checked ng-model="showImage" bs-checkbox/>
     </div>
 
     <div id="holder">
@@ -79,7 +85,9 @@
 
 </tr></table>
 
-<script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.min.js"></script>
+  <script src="bower_components/angular-strap/dist/angular-strap.tpl.min.js"></script>
   <script src="app/scripts/app.js"></script>
   <script src="app/scripts/directives/ipLabeledSlider.js"></script>
   <script src="app/scripts/controllers/GridController.js"></script>

@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "jquery": "~2.1.0",
-    "angular": "~1.2.18"
+    "angular": "~1.2.18",
+    "angular-strap": "~2.0.0"
   }
 }
