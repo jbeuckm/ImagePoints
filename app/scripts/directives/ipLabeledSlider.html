@@ -1,5 +1,5 @@
 <div>
   <label for="slider-{{$id}}">{{ label }}</label>
   <input id="slider-{{$id}}" type ="range" min ="{{min}}" max="{{max}}" step ="{{step}}" value="{{value}}" ng-model="value"/>
-  <span>{{ value }}</span>
+  <span>{{ value | number:3 }}</span>
 </div>
